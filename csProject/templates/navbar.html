@@ -1,0 +1,19 @@
+<div>
+    {% url 'index' as index_url %}
+    <span>{% if request.path == index_url %}Home{% else %}<a href="{{ index_url }}">Home</a>{% endif %}</span>
+    <span style="float: right">
+        {% if user.is_authenticated %}
+            {% url 'profile' as profile_url %}
+            <span>Logged in as
+                {% if request.path == profile_url %}
+                    {{ user.username }}
+                {% else %}
+                    <a href="{{ profile_url }}">{{ user.username }}</a>
+                {% endif %}
+            </span>
+        <span><a href="{% url 'logout' %}">Logout</a></span>
+        {% else %}
+            <span><a href="{% url 'login' %}">Login</a></span>
+        {% endif %}
+    </span>
+</div>
