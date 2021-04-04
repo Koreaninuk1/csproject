@@ -6,5 +6,5 @@ def index(request):
     print(request.user)
     return render(request, 'index.html')
 
-class ProfileView(LoginRequiredMixin, TemplateView):
-    template_name = "accounts/profile.html"
+def login(request):
+    return render(request, "accounts/login.html")
