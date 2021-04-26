@@ -10,6 +10,8 @@ defusedxml==0.7.1
 dj-database-url==0.5.0
 Django==3.1.7
 django-allauth==0.44.0
+django-heroku==0.3.1
+django-on-heroku==1.1.2
 Flask==1.1.2
 google==3.0.0
 google-api-core==1.26.3
@@ -27,7 +29,8 @@ MarkupSafe==1.1.1
 oauthlib==3.1.0
 packaging==20.9
 protobuf==3.15.8
-psycopg2==2.7.7
+psycopg2==2.7.5
+psycopg2-binary==2.8.6
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
 pycparser==2.20
