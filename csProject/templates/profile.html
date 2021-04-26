@@ -3,7 +3,7 @@
 {% block title %}Profile{% endblock %}
 
 {% block content %}
-<h1>Profile</h1>
+<h1>Change My Role</h1>
 <form action="/profile" method="post">
     {% csrf_token %}
     {% ifequal role 'student' %}
@@ -19,4 +19,49 @@
     {% endifequal %}
     <input type="submit" value="Save" style="margin-top: 10px;">
 </form>
+<h1>View My Appointments</h1>
+<h3>Confirmed Appointments</h3>
+<div id="confirmed-appointments-list">
+    {% if confirmed_appointments|length == 0 %}
+        none
+    {% endif %}
+    {% for confirmed_appointment in confirmed_appointments %}
+        <p style="display: inline-block;">{{ confirmed_appointment.teacher }} | {{ confirmed_appointment.datetime }}</p>
+        <form action="/cancel_appointment" method="post" style="display: inline-block;">
+            {% csrf_token %}
+            <input type="text" name="teacher" value="{{ confirmed_appointment.teacher }}" hidden />
+            <input type="text" name="student" value="{{ confirmed_appointment.student }}" hidden />
+            <input type="text" name="datetime" value="{{ confirmed_appointment.datetime_format_sync }}" hidden />
+            <input type="submit" value="Cancel"/>
+        </form>
+    {% endfor %}
+</div>
+<h3>Appointment Waiting Confirmation</h3>
+<div id="requested-appointments-list">
+    {% if requested_appointments|length == 0 %}
+        none
+    {% endif %}
+    {% for requested_appointment in requested_appointments %}
+        <p style="display: inline-block;">{{ requested_appointment.teacher }} | {{ requested_appointment.datetime }}</p>
+        {% ifequal role 'teacher' %}
+        <form action="/accept_appointment_request" method="post" style="display: inline-block;">
+            {% csrf_token %}
+            <input type="text" name="teacher" value="{{ requested_appointment.teacher }}" hidden />
+            <input type="text" name="student" value="{{ requested_appointment.student }}" hidden />
+            <input type="text" name="datetime" value="{{ requested_appointment.datetime_format_sync }}" hidden />
+            <input type="submit" value="Accept"/>
+        </form>
+        {% endifequal %}
+        <form action="/decline_appointment_request" method="post" style="display: inline-block;">
+            {% csrf_token %}
+            <input type="text" name="teacher" value="{{ requested_appointment.teacher }}" hidden />
+            <input type="text" name="student" value="{{ requested_appointment.student }}" hidden />
+            <input type="text" name="datetime" value="{{ requested_appointment.datetime_format_sync }}" hidden />
+            <input type="submit" value="{% ifequal role 'student'%}Cancel{% else %}Decline{% endifequal %}"/>
+        </form>
+    {% endfor %}
+</div>
+<script type="text/javascript">
+
+</script>
 {% endblock %}

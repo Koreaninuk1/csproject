@@ -21,7 +21,12 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name="index"),
+    path('get_calendar', views.get_calendar, name="get_calendar"),
+    path('create_appointment', views.create_appointment, name="create_appointment"),
     path('profile', views.profile, name="profile"),
+    path('cancel_appointment', views.cancel_appointment, name="cancel_appointment"),
+    path('accept_appointment_request', views.accept_appointment_request, name="accept_appointment_request"),
+    path('decline_appointment_request', views.cancel_appointment, name="decline_appointment_request"),
 
     # Django Auth
     path('accounts/', include('allauth.urls')),

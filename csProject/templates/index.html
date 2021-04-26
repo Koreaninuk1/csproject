@@ -3,5 +3,60 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-<h1>Template Homepage</h1>
+<h1>View Teachers' Appointment</h1>
+<form id='view-appointments' onsubmit="viewAppointments(); return false;">
+    {% csrf_token %}
+    <select name="teachers" id="teachers" style="width: 200px;">
+    {% for teacher in teachers %}
+        <option value="{{ teacher }}">{{ teacher }}</option>
+    {% endfor %}
+    </select>
+    <input type="submit"/>
+</form>
+<div id="appointment-list"></div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+    function viewAppointments() {
+        var appointmentList = document.getElementById('appointment-list');
+        appointmentList.innerHTML = '';
+        $.ajax({
+            type: 'post',
+            url: '/get_calendar',
+            data: $('#view-appointments').serialize(),
+            success: function(res) {
+                for(var i=0; i<res.appointments.length; i++) {
+                    var appointmentItem = document.createElement('p');
+                    appointmentItem.innerText = res.appointments[i];
+                    appointmentList.append(appointmentItem);
+                }
+            }
+        });
+    }
+</script>
+<h1>Create Appointment</h1>
+<form id='create-appointment' onsubmit="createAppointment(); return false;">
+    {% csrf_token %}
+    <select name="teacher" style="width: 200px;">
+    {% for teacher in teachers %}
+        <option value="{{ teacher }}">{{ teacher }}</option>
+    {% endfor %}
+    </select>
+    <input type="datetime-local" name="datetime"/>
+    <input type="submit"/>
+</form>
+<script type="text/javascript">
+    function createAppointment() {
+        $.ajax({
+            type: 'post',
+            url: '/create_appointment',
+            data: $('#create-appointment').serialize(),
+            success: function(res) {
+                alert('Appointment request sent');
+            },
+            error: function(err) {
+                alert('error: '+err.responseText);
+            }
+        });
+    }
+</script>
 {% endblock %}
