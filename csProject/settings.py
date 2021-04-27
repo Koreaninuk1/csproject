@@ -13,7 +13,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 SECRET_KEY = 'tb=i(pb8q5^87m_+gurg#w-$6i*u5j&5!z&uc8zk(t%@xxn-lg'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['csproject-justin.herokuapp.com', 'localhost']
 
