@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
 ]
 
-SITE_ID = 2
+SITE_ID = 3
 
 MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
