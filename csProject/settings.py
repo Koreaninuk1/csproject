@@ -4,6 +4,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 PROJECT_DIR = BASE_DIR / 'csProject'
 
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -14,7 +15,7 @@ SECRET_KEY = 'tb=i(pb8q5^87m_+gurg#w-$6i*u5j&5!z&uc8zk(t%@xxn-lg'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['csproject-justin.herokuapp.com']
+ALLOWED_HOSTS = ['csproject-justin.herokuapp.com', 'localhost']
 
 
 # Application definition
@@ -38,7 +39,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
 ]
 
-SITE_ID = 2
+SITE_ID = 1
 
 MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
