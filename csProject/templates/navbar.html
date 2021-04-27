@@ -11,9 +11,10 @@
                     <a href="{{ profile_url }}">{{ user.username }}</a>
                 {% endif %}
             </span>
-        <span><a href="{% url 'logout' %}">Logout</a></span>
+        <span><a href="{% url 'logout_user' %}">Logout</a></span>
         {% else %}
-            <span><a href="{% url 'login' %}">Login</a></span>
+            <span><a href="{% url 'sign_up' %}">Sign Up</a></span>
+            <span><a href="{% url 'login_user' %}">Login</a></span>
         {% endif %}
     </span>
 </div>

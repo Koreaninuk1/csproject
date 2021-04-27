@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    {% if errors %}
+        <p>Your username and password didn't match. Please try again.</p>
+    {% endif %}
+
+    {% if next %}
+        {% if user.is_authenticated %}
+            <p>Your account doesn't have access to this page. To proceed, please login with an account that has access.</p>
+        {% else %}
+            <p>Please login to see this page.</p>
+        {% endif %}
+    {% endif %}
+
+    <form method="POST" action="{% url 'login_user' %}" class="form-group">
+        {% csrf_token %}
+        <input type="text" name="username" placeholder="username"/>
+        <input type="password" name="password" placeholder="password"/>
+        <input type="submit" value="login" />
+            <input type="hidden" name=" next" value="{{ next }}" hidden />
+    </form>
+{% endblock %}

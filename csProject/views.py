@@ -1,14 +1,46 @@
 from django.http import JsonResponse, HttpResponseBadRequest, HttpResponse
 from django.shortcuts import render, redirect
+from django.contrib.auth import login as auth_login
+from django.contrib.auth import logout, authenticate
 from oauth_app.models import Role, Appointments, AppointmentRequests
+from oauth_app.forms import RegisterForm
+from django.contrib.auth.forms import AuthenticationForm
 
 def index(request):
     teachers = Role.objects.filter(role='teacher')
     context = {'teachers':[]}
     for teacher in teachers:
-        if teacher.email != '' and teacher.email != request.user.email:
-            context['teachers'].append(teacher.email)
+        if teacher.email != '':
+            if hasattr(request.user, 'email') and teacher.email == request.user.email:
+                continue
+            else:
+                context['teachers'].append(teacher.email)
     return render(request, 'index.html', context)
+
+def sign_up(request):
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return redirect('/')
+    else:
+        form = RegisterForm()
+    return render(request, 'sign_up.html', {'form': form})
+
+def login_user(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            auth_login(request, user)
+        else:
+            render(request, 'login.html', {'errors': 'does not exist'})
+    return render(request, 'login.html')
+
+def logout_user(request):
+    logout(request)
+    return redirect('/')
 
 def get_calendar(request):
     if request.method == 'POST':

@@ -30,6 +30,7 @@ urlpatterns = [
 
     # Django Auth
     path('accounts/', include('allauth.urls')),
-    path('accounts/login', auth_views.LoginView.as_view(template_name="accounts/login.html"), name="login"),
-    path('accounts/logout', auth_views.LogoutView.as_view(), name="logout"),
+    path('profile/sign_up', views.sign_up, name="sign_up"),
+    path('profile/login', views.login_user, name="login_user"),
+    path('profile/logout', views.logout_user, name="logout_user"),
 ]
